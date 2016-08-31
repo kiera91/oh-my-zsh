@@ -79,15 +79,15 @@ prompt_end() {
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
-  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    GIT_USERNAME=$(git config --local user.name)
-    if [[ -n $GIT_USERNAME ]]; then
-       # shows the current git username
-       prompt_segment black default "%(!.%{%F{yellow}%}.)$GIT_USERNAME"
-    else
-       # shows the user e.g (Ryan@MACHINE)
-       prompt_segment black default "%(!.%{%F{yellow}%}.)$USER@%m"
-    fi  
+  GIT_USERNAME=$(git config --local user.name)
+  if [[ -n $GIT_USERNAME ]]; then
+    # shows the current git username
+    prompt_segment black default "%(!.%{%F{yellow}%}.)$GIT_USERNAME"
+  else
+    if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+      # shows the user e.g (Ryan@MACHINE)
+      prompt_segment black default "%(!.%{%F{yellow}%}.)$USER@%m"
+    fi
   fi
 }
 
